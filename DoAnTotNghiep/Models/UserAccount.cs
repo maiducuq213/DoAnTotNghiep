@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using DoAnTotNghiep.Models.BaseEntities;
+using System.Runtime.Serialization;
 
 namespace DoAnTotNghiep.Models
 {
@@ -12,11 +13,10 @@ namespace DoAnTotNghiep.Models
         public string Username { get; set; }
 
         [Required]
-        public byte[] PasswordHash { get; set; }
+        public string PasswordHash { get; set; }
 
         [Required]
-        public byte[] PasswordSalt { get; set; }
-
+        public StaffRole Role { get; set; }  // Sử dụng Enum
         public bool IsActive { get; set; } = true;
 
         // Liên kết 1-1 với Staff
@@ -24,6 +24,22 @@ namespace DoAnTotNghiep.Models
         public int StaffId { get; set; }
 
         public Staff Staff { get; set; }
+
     }
+    // Enum để định nghĩa Role của Staff
+    public enum StaffRole
+    {
+        [EnumMember(Value = "Doctor")]
+        Doctor,
+
+        [EnumMember(Value = "Nurse")]
+        Nurse,
+
+        [EnumMember(Value = "Technician")]
+        Technician,
+
+        [EnumMember(Value = "Admin")]
+        Admin
+    }
+
 }
-    

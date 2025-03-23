@@ -1,7 +1,10 @@
 ﻿using DoAnTotNghiep.Models;
 using DoAnTotNghiep.Models.BaseEntities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Text;
 
 namespace DoAnTotNghiep.Data
 {
@@ -21,9 +24,12 @@ namespace DoAnTotNghiep.Data
         public DbSet<PaymentInvoice> PaymentInvoices { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
             modelBuilder.Entity<Patient>()
                 .Property(p => p.Gender)
                 .HasConversion<string>();
@@ -36,34 +42,34 @@ namespace DoAnTotNghiep.Data
                 .Property(b => b.Status)
                 .HasConversion<string>();
         }
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            var userId = GetCurrentUserId(); // Lấy ID của người dùng hiện tại
+        //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    var userId = GetCurrentUserId(); // Lấy ID của người dùng hiện tại
 
-            var entries = ChangeTracker.Entries<BaseEntity>();
+        //    var entries = ChangeTracker.Entries<BaseEntity>();
 
-            foreach (var entry in entries)
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Entity.CreatedAt = DateTime.UtcNow;
-                    entry.Entity.CreatedBy = userId;
-                }
+        //    foreach (var entry in entries)
+        //    {
+        //        if (entry.State == EntityState.Added)
+        //        {
+        //            entry.Entity.CreatedAt = DateTime.UtcNow;
+        //            entry.Entity.CreatedBy = userId;
+        //        }
 
-                if (entry.State == EntityState.Modified)
-                {
-                    entry.Entity.UpdatedAt = DateTime.UtcNow;
-                    entry.Entity.UpdatedBy = userId;
-                }
-            }
+        //        if (entry.State == EntityState.Modified)
+        //        {
+        //            entry.Entity.UpdatedAt = DateTime.UtcNow;
+        //            entry.Entity.UpdatedBy = userId;
+        //        }
+        //    }
 
-            return await base.SaveChangesAsync(cancellationToken);
-        }
+        //    return await base.SaveChangesAsync(cancellationToken);
+        //}
 
-        private int? GetCurrentUserId()
-        {
-            var userIdString = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return int.TryParse(userIdString, out var userId) ? userId : null;
-        }
+        //private int? GetCurrentUserId()
+        //{
+        //    var userIdString = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        //    return int.TryParse(userIdString, out var userId) ? userId : null;
+        //}
     }
 }

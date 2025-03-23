@@ -85,7 +85,6 @@ namespace DoAnTotNghiep.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false),
                     DepartmentID = table.Column<int>(type: "int", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -245,6 +244,35 @@ namespace DoAnTotNghiep.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserAccounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    StaffId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<int>(type: "int", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAccounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserAccounts_Staffs_StaffId",
+                        column: x => x.StaffId,
+                        principalTable: "Staffs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PaymentInvoiceDetail",
                 columns: table => new
                 {
@@ -310,6 +338,11 @@ namespace DoAnTotNghiep.Migrations
                 name: "IX_Staffs_DepartmentID",
                 table: "Staffs",
                 column: "DepartmentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAccounts_StaffId",
+                table: "UserAccounts",
+                column: "StaffId");
         }
 
         /// <inheritdoc />
@@ -331,16 +364,19 @@ namespace DoAnTotNghiep.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
-                name: "Staffs");
+                name: "UserAccounts");
 
             migrationBuilder.DropTable(
                 name: "PaymentInvoices");
 
             migrationBuilder.DropTable(
-                name: "Departments");
+                name: "Staffs");
 
             migrationBuilder.DropTable(
                 name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
         }
     }
 }

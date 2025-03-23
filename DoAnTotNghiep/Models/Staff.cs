@@ -11,8 +11,7 @@
         [StringLength(100)]
         public string FullName { get; set; }
 
-        [Required]
-        public StaffRole Role { get; set; }  // Sử dụng Enum
+       
 
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
@@ -36,13 +35,5 @@
         public decimal Salary { get; set; }
     }
 
-    // Enum để định nghĩa Role của Staff
-    public enum StaffRole
-    {
-        Doctor,
-        Nurse,
-        Technician,
-        Admin
-    }
-
+   
 }

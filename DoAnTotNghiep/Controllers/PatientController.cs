@@ -1,6 +1,7 @@
 ﻿using DoAnTotNghiep.DTOs;
 using DoAnTotNghiep.Models;
 using DoAnTotNghiep.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace DoAnTotNghiep.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;

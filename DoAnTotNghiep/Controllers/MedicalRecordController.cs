@@ -56,7 +56,17 @@ namespace DoAnTotNghiep.Controllers
             }
             return Ok(update);
         }
-
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deleteMedicalRecord(int id)
+        {
+            var result = await _medicalRecordService.DeleteRecord(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+        [NonAction]
         public MedicalRecord CreateMedicalRecord(MedicalRecordDto medicalRecord)
         {
             return new MedicalRecord

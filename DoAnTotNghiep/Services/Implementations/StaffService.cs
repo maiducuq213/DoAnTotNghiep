@@ -35,7 +35,6 @@
             if (existingStaff == null)
                 return null;
             existingStaff.FullName = staff.FullName;
-            existingStaff.Role = staff.Role;
             existingStaff.DepartmentID = staff.DepartmentID;
             existingStaff.Phone = staff.Phone;
             existingStaff.Email = staff.Email;
