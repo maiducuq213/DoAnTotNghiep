@@ -6,6 +6,7 @@
     using DoAnTotNghiep.Data;
     using DoAnTotNghiep.Models;
     using DoAnTotNghiep.Services.Interfaces;
+    using DoAnTotNghiep.DTOs;
 
     public class BedService : IBedService
     {
@@ -21,29 +22,36 @@
             return await _context.Beds.Include(b => b.Department).ToListAsync();
         }
 
-        public async Task<Bed> GetBedById(int id)
+        public async Task<Bed?> GetBedById(int id)
         {
             return await _context.Beds.Include(b => b.Department)
                                         .FirstOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<Bed> AddBed(Bed bed)
+        public async Task<Bed> AddBed(BedDto bedDto)
         {
-            _context.Beds.Add(bed);
+            var createBed = new Bed
+            {
+                RoomNumber = bedDto.RoomNumber,
+                DepartmentID = bedDto.DepartmentID,
+                Status = bedDto.Status,
+                PatientID = bedDto.PatientID
+            };
+            _context.Beds.Add(createBed);
             await _context.SaveChangesAsync();
-            return bed;
+            return createBed;
         }
 
-        public async Task<Bed> UpdateBed(int id, Bed bed)
+        public async Task<Bed?> UpdateBed(int id, BedDto bedDto)
         {
             var existingBed = await _context.Beds.FindAsync(id);
             if (existingBed == null)
                 return null; // hoặc throw exception nếu cần
 
-            existingBed.RoomNumber = bed.RoomNumber;
-            existingBed.DepartmentID = bed.DepartmentID;
-            existingBed.Status = bed.Status;
-            existingBed.PatientID = bed.PatientID;
+            existingBed.RoomNumber = bedDto.RoomNumber;
+            existingBed.DepartmentID = bedDto.DepartmentID;
+            existingBed.Status = bedDto.Status;
+            existingBed.PatientID = bedDto.PatientID;
 
             await _context.SaveChangesAsync();
             return existingBed;

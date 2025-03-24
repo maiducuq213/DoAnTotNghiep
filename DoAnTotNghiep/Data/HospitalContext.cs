@@ -10,10 +10,19 @@ namespace DoAnTotNghiep.Data
 {
     public class HospitalContext:DbContext
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public HospitalContext(DbContextOptions<HospitalContext> options, IHttpContextAccessor httpContextAccessor) : base(options) 
+        private readonly AuditInterceptor _auditInterceptor;
+
+
+        public HospitalContext(DbContextOptions<HospitalContext> options, AuditInterceptor auditInterceptor) : base(options)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _auditInterceptor = auditInterceptor;
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (_auditInterceptor != null)
+            {
+                optionsBuilder.AddInterceptors(_auditInterceptor);
+            }
         }
 
         public DbSet<Patient> Patients { get; set; }
@@ -42,6 +51,7 @@ namespace DoAnTotNghiep.Data
                 .Property(b => b.Status)
                 .HasConversion<string>();
         }
+        
         //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         //{
         //    var userId = GetCurrentUserId(); // Lấy ID của người dùng hiện tại

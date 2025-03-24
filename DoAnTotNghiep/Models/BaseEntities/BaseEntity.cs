@@ -12,11 +12,11 @@ namespace DoAnTotNghiep.Models.BaseEntities
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // Ngày tạo
 
-        public int? CreatedBy { get; set; } // ID người tạo
+        public string? CreatedBy { get; set; } // ID người tạo
 
         public DateTime? UpdatedAt { get; set; } // Ngày cập nhật
 
-        public int? UpdatedBy { get; set; } // ID người cập nhật
+        public string? UpdatedBy { get; set; } // ID người cập nhật
 
         public DateTime? DeletedAt { get; set; } // Ngày xóa (nếu có)
 

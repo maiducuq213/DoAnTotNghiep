@@ -39,19 +39,8 @@ namespace DoAnTotNghiep.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var patient = new Patient
-            {
-                FullName = patientDto.FullName,
-                DateOfBirth = patientDto.DateOfBirth,
-                Gender = patientDto.Gender,
-                Address = patientDto.Address,
-                Phone = patientDto.Phone,
-                Email = patientDto.Email,
-                EmergencyContact = patientDto.EmergencyContact,
-                MedicalHistory = patientDto.MedicalHistory,
-                CreatedAt = DateTime.Now
-            };
-            var createdPatient = await _patientService.AddPatient(patient);
+            
+            var createdPatient = await _patientService.AddPatient(patientDto);
             return CreatedAtAction(nameof(GetPatientById), new { id = createdPatient.Id }, createdPatient);
         }
 
@@ -60,18 +49,8 @@ namespace DoAnTotNghiep.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var patient = new Patient
-            {
-                FullName = patientDto.FullName,
-                DateOfBirth = patientDto.DateOfBirth,
-                Gender = patientDto.Gender,
-                Address = patientDto.Address,
-                Phone = patientDto.Phone,
-                Email = patientDto.Email,
-                EmergencyContact = patientDto.EmergencyContact,
-                MedicalHistory = patientDto.MedicalHistory
-            };
-            var updatedPatient = await _patientService.UpdatePatient(id, patient);
+            
+            var updatedPatient = await _patientService.UpdatePatient(id, patientDto);
             if (updatedPatient == null)
                 return NotFound();
             return Ok(updatedPatient);

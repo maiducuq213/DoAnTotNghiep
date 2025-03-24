@@ -2,18 +2,21 @@
 using System.ComponentModel.DataAnnotations;
 using DoAnTotNghiep.Models.BaseEntities;
 using System.Runtime.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoAnTotNghiep.Models
 {
+    [Index(nameof(UserName), IsUnique = true)]
     public class UserAccount :BaseEntity
     {
 
         [Required]
         [StringLength(50)]
-        public string Username { get; set; }
+
+        public string UserName { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
         [Required]
         public StaffRole Role { get; set; }  // Sử dụng Enum

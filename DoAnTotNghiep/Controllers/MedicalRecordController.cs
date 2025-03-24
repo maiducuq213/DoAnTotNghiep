@@ -36,8 +36,7 @@ namespace DoAnTotNghiep.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var medicalRecord = CreateMedicalRecord(medicalRecordDto);
-            var create = await _medicalRecordService.AddRecord(medicalRecord);
+            var create = await _medicalRecordService.AddRecord(medicalRecordDto);
             return CreatedAtAction(nameof(getMedicalRecord), new { id = create.Id }, create);
 
         }
@@ -48,8 +47,7 @@ namespace DoAnTotNghiep.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var medicalRecord = CreateMedicalRecord(medicalRecordDto);
-            var update = await _medicalRecordService.UpdateRecord(id,medicalRecord);
+            var update = await _medicalRecordService.UpdateRecord(id, medicalRecordDto);
             if (update == null)
             {
                 return NotFound();
@@ -66,26 +64,5 @@ namespace DoAnTotNghiep.Controllers
             }
             return NoContent();
         }
-        [NonAction]
-        public MedicalRecord CreateMedicalRecord(MedicalRecordDto medicalRecord)
-        {
-            return new MedicalRecord
-            {
-                CreatedAt = DateTime.Now,
-                IsDeleted = false,
-                PatientID = medicalRecord.PatientID,
-                StaffID = medicalRecord.StaffID,
-                TreatmentPlan = medicalRecord.TreatmentPlan,
-                Diagnosis = medicalRecord.Diagnosis,
-                Prescription = medicalRecord.Prescription,
-                VisitDate = medicalRecord.VisitDate,
-                DeletedAt =null,
-                UpdatedAt=null,
-                UpdatedBy = null,
-                CreatedBy= null,
-            };
-
-        }
-    }
-    
+    }   
 }

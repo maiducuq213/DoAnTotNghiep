@@ -20,13 +20,13 @@
             _hospitalContext = hospitalContext;
             _configuaration = configuaration;
         }
-        public async Task<LoginResponseModel> Authenticate(LoginRequestModel req)
+        public async Task<LoginResponseModel?> Authenticate(LoginRequestModel req)
         {
             if (string.IsNullOrWhiteSpace(req.UserName) || string.IsNullOrWhiteSpace(req.Password))
             {
                 return null;
             }
-            var UserAccount = await _hospitalContext.UserAccounts.FirstOrDefaultAsync(x => x.Username == req.UserName);
+            var UserAccount = await _hospitalContext.UserAccounts.FirstOrDefaultAsync(x => x.UserName == req.UserName);
             if(UserAccount != null)
             {
                 var claims = new[]

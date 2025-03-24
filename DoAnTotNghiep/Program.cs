@@ -39,9 +39,13 @@ builder.Services.AddSwaggerGen(options =>
         { jwtSecurityScheme,Array.Empty<string>()}
     });
 });
+builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddDbContext<HospitalContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("HospitalDatabase")));
+builder.Services.AddDbContext<HospitalContext>((serviceProvider, options) =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HospitalDatabase"));
+    options.AddInterceptors(serviceProvider.GetRequiredService<AuditInterceptor>()); // Gắn Interceptor vào DbContext
+});
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,7 +66,13 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddAuthorization();
+builder.Services.AddSingleton<AuditInterceptor>();
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+//builder.Services.AddScoped<IPaymentInvoiceService, PaymentInvoiceService>();
+builder.Services.AddScoped<IBedService, BedService>();
 builder.Services.AddScoped<JwtService>();  // Hoặc AddSingleton, AddTransient tùy mục đích
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 var app = builder.Build();

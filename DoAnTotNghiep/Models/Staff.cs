@@ -33,6 +33,7 @@
 
         [Column(TypeName = "decimal(10,2)")]
         public decimal Salary { get; set; }
+
     }
 
    
