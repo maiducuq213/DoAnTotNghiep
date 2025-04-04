@@ -23,6 +23,8 @@ namespace DoAnTotNghiep.Models
 
         public string Email { get; set; }
         [Required]
+        public string ImgPath { get; set; }
+        [Required]
 
         public string EmergencyContact { get; set; }
         [Required]

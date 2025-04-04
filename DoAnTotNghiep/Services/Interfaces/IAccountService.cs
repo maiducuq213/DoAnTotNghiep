@@ -5,7 +5,8 @@ namespace DoAnTotNghiep.Services.Interfaces
 {
     public interface IAccountService
     {
-        Task<UserAccount> RegisterAccount(AccountDto accountDto);
-        Task<UserAccount?> UpdateAccount(string userName,AccountDto accountDto);
+        Task<Account> RegisterAccount(AccountDto accountDto);
+        Task<Account?> UpdateAccount(string userName,AccountDto accountDto);
+        //Task<bool?> SoftDelete(string userName);
     }
 }

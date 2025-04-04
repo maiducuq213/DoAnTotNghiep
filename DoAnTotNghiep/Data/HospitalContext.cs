@@ -33,7 +33,11 @@ namespace DoAnTotNghiep.Data
         public DbSet<PaymentInvoice> PaymentInvoices { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Report> Reports { get; set; }
-        public DbSet<UserAccount> UserAccounts { get; set; }
+        public DbSet<Account> UserAccounts { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public DbSet<InvoiceService> InvoiceServices { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

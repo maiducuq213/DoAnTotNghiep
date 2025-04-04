@@ -22,9 +22,13 @@
         }
         public async Task<LoginResponseModel?> Authenticate(LoginRequestModel req)
         {
-            if (string.IsNullOrWhiteSpace(req.UserName) || string.IsNullOrWhiteSpace(req.Password))
+            if (req == null || string.IsNullOrWhiteSpace(req.UserName) || string.IsNullOrWhiteSpace(req.Password))
             {
-                return null;
+                return new LoginResponseModel
+                {
+                    Success = false,
+                    Message = "Invalid request: Username and Password are required."
+                };
             }
             var UserAccount = await _hospitalContext.UserAccounts.FirstOrDefaultAsync(x => x.UserName == req.UserName);
             if(UserAccount != null)
@@ -52,14 +56,20 @@
                 string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
                 return new LoginResponseModel
                 {
+                    Success = true,
+                    Message = "Login successful.",
                     AccessToken = tokenValue,
                     UserName = req.UserName,
                     ExpiresIn = (int)tokenExpiryTimeStamp.Subtract(DateTime.UtcNow).TotalSeconds
                 };
 
             }
-            return null;
-            
+            return new LoginResponseModel
+            {
+                Success = false,
+                Message = "User not found."
+            };
+
         }
        
     }

@@ -38,9 +38,11 @@
                 FullName = staffDto.FullName,
                 Address = staffDto.Address,
                 Email = staffDto.Email,
+                Position = staffDto.Position,
                 DepartmentID = department.Id,
                 HireDate = DateTime.Now,
                 Phone = staffDto.Phone,
+                ImgPath = staffDto.ImgPath,
                 Salary = staffDto.Salary,
                 IsDeleted = false
 
@@ -65,10 +67,12 @@
             existingStaff.FullName = staffDto.FullName;
             existingStaff.DepartmentID = department.Id;
             existingStaff.Phone = staffDto.Phone;
+            existingStaff.Position = staffDto.Position;
             existingStaff.Email = staffDto.Email;
             existingStaff.Address = staffDto.Address;
             existingStaff.HireDate = staffDto.HireDate;
             existingStaff.Salary = staffDto.Salary;
+            existingStaff.ImgPath = staffDto.ImgPath;
             
             await _context.SaveChangesAsync();
             return existingStaff;

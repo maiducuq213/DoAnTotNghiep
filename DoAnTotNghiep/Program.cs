@@ -65,13 +65,26 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true
     };
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") // Thay thế bằng URL frontend của bạn
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); // Nếu bạn cần hỗ trợ cookie hoặc thông tin xác thực
+    });
+});
+
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddSingleton<AuditInterceptor>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IStaffService, StaffService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-//builder.Services.AddScoped<IPaymentInvoiceService, PaymentInvoiceService>();
+builder.Services.AddScoped<IPaymentInvoiceService, PaymentInvoiceService>();
 builder.Services.AddScoped<IBedService, BedService>();
 builder.Services.AddScoped<JwtService>();  // Hoặc AddSingleton, AddTransient tùy mục đích
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
@@ -98,7 +111,8 @@ app.UseSwagger(options =>
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+// Sử dụng middleware CORS
+app.UseCors("AllowSpecificOrigin");
 app.MapControllers();
 
 app.Run();

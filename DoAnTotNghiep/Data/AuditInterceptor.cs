@@ -20,9 +20,8 @@ namespace DoAnTotNghiep.Data
             var context = eventData.Context;
             if (context == null) return result;
 
-            var user = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
-            //var userAccount = _hospitalContext.UserAccounts.First(u => u.UserName == user);
-            //var staff = _hospitalContext.Staffs.FirstOrDefault(s => s.Id == userAccount.StaffId);
+            var user = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;// lay username da tao trong claim
+            
             Console.WriteLine($" AuditInterceptor Running - User: {user}"); // Debug log
             foreach (var entry in context.ChangeTracker.Entries<BaseEntity>())
             {

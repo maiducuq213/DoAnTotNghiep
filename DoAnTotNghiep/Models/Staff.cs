@@ -10,13 +10,13 @@
         [Required]
         [StringLength(100)]
         public string FullName { get; set; }
-
-       
+        [Required]
+        public string Position { get; set; }
 
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
         public Department? Department { get; set; }  // Navigation Property
-
+            
         [Required]
         [Phone]
         public string Phone { get; set; }
@@ -27,6 +27,8 @@
         [Required]
 
         public string Address { get; set; }
+        public string ImgPath { get; set; }
+
 
         [Required]
         public DateTime HireDate { get; set; }

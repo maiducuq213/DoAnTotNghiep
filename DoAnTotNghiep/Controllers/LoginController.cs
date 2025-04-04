@@ -17,15 +17,18 @@ namespace DoAnTotNghiep.Controllers
             _jwtService = jwtService;
         }
         [AllowAnonymous]
-        [HttpPost("Login")]
-        public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel req)
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginRequestModel req)
         {
             var result = await _jwtService.Authenticate(req);
-            if(req is null)
+
+            if (!result.Success)
             {
-                return Unauthorized();
+                return BadRequest(new { result.Success, result.Message });
             }
-            return result;
+
+            return Ok(result);
         }
+
     }
 }

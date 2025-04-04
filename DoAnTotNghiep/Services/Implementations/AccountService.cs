@@ -14,9 +14,9 @@ namespace DoAnTotNghiep.Services.Implementations
         {
             _hospitalContext = hospitalContext;
         }
-        public async Task<UserAccount> RegisterAccount(AccountDto accountDto)
+        public async Task<Account> RegisterAccount(AccountDto accountDto)
         {
-            var newAccount = new UserAccount
+            var newAccount = new Account
             {
                 UserName = accountDto.UserName,
                 Password = accountDto.Password,
@@ -29,7 +29,7 @@ namespace DoAnTotNghiep.Services.Implementations
             await _hospitalContext.SaveChangesAsync();
             return newAccount;
         }
-        public async Task<UserAccount?> UpdateAccount(string userName,AccountDto accountDto)
+        public async Task<Account?> UpdateAccount(string userName,AccountDto accountDto)
         {
             var existingAccount = await _hospitalContext.UserAccounts.FirstOrDefaultAsync(u => u.UserName==userName);
             if (existingAccount == null)

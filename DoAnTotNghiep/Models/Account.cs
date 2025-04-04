@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DoAnTotNghiep.Models
 {
     [Index(nameof(UserName), IsUnique = true)]
-    public class UserAccount :BaseEntity
+    public class Account :BaseEntity
     {
 
         [Required]

@@ -18,6 +18,7 @@ namespace DoAnTotNghiep.DTOs
         [Required]
 
         public string Email { get; set; }
+        public string ImgPath { get; set; }
         [Required]
 
         public string EmergencyContact { get; set; }

@@ -34,6 +34,7 @@
                 Address = patientDto.Address,
                 Phone = patientDto.Phone,
                 Email = patientDto.Email,
+                ImgPath = patientDto.ImgPath,
                 EmergencyContact = patientDto.EmergencyContact,
                 MedicalHistory = patientDto.MedicalHistory,
                 
@@ -55,10 +56,10 @@
             existingPatient.Address = patientDto.Address;
             existingPatient.Phone = patientDto.Phone;
             existingPatient.Email = patientDto.Email;
+            existingPatient.ImgPath = patientDto.ImgPath;
             existingPatient.EmergencyContact = patientDto.EmergencyContact;
             existingPatient.MedicalHistory = patientDto.MedicalHistory;
-            existingPatient.UpdatedAt = DateTime.Now;
-            existingPatient.UpdatedBy = null;
+            
             await _context.SaveChangesAsync();
             return existingPatient;
         }
